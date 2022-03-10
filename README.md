@@ -1,1 +1,1 @@
-# cdk_projects_migration
+# cdk-projects-migration
