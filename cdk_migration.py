@@ -1,5 +1,5 @@
 import os
-from github import Github, UnknownObjectException
+from github import Github, Repository, UnknownObjectException
 
 cdk_projects = []
 cdk_projects_without_dependencies_file = []
@@ -16,7 +16,7 @@ def _add_cdk_repo(cdk_list: list, name: str, cdk_path: str, version: str):
     cdk_list.append(repo)
 
 
-def _output_projects(projects, projects_type):
+def _output_projects(projects: list, projects_type: str):
     print(f'{projects_type} found: {len(projects)}')
     for project in projects:
         print(project)
@@ -35,7 +35,7 @@ def _get_metrics():
     print(f'\n Migration progress: {progress}%')
 
 
-def _find_dependencies_file(repo, cdk_path):
+def _find_dependencies_file(repo: Repository.Repository, cdk_path: str):
     try:
         return repo.get_contents(f'{cdk_path}Pipfile')
     except UnknownObjectException:
@@ -51,7 +51,7 @@ def _find_dependencies_file(repo, cdk_path):
     return False
 
 
-def _find_cdk_version(repo_name, cdk_path, file_content):
+def _find_cdk_version(repo_name: str, cdk_path: str, file_content: str):
     if 'aws-cdk.core' in file_content:
         _add_cdk_repo(cdk_projects, repo_name, cdk_path, '1')
     elif 'aws-cdk-lib' in file_content:
@@ -60,7 +60,7 @@ def _find_cdk_version(repo_name, cdk_path, file_content):
         print('aws-cdk-* package not found in Pipfile.')
 
 
-def _analyze_repo(repo):
+def _analyze_repo(repo: Repository.Repository):
     contents = repo.get_contents('')
     for file_content in contents:
         if file_content.type == 'dir':
