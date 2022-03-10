@@ -17,7 +17,7 @@ def _add_cdk_repo(cdk_list: list, name: str, cdk_path: str, version: str):
 
 
 def _output_projects(projects: list, projects_type: str):
-    print(f'{projects_type} found: {len(projects)}')
+    print(f'\n=> {projects_type} found: {len(projects)}')
     for project in projects:
         print(project)
     print('\n')
@@ -32,7 +32,7 @@ def _get_metrics():
     print(f'- Total projects version 1:\t{cdk_v1_total}')
     print(f'- Total projects version 2:\t{cdk_v2_total}')
     print(f'- Total projects overall:\t{overall_total}')
-    print(f'\n Migration progress: {progress}%')
+    print(f'\n Migration progress: {progress}%\n')
 
 
 def _find_dependencies_file(repo: Repository.Repository, cdk_path: str):
@@ -83,7 +83,7 @@ def main():
             _analyze_repo(repo)
 
     if len(cdk_projects_without_dependencies_file) > 0:
-        _output_projects(cdk_projects_without_dependencies_file, 'CDK projects without dependencies file')
+        _output_projects(cdk_projects_without_dependencies_file, 'Possible CDK projects without dependencies file')
     if len(cdk_projects) > 0:
         _output_projects(cdk_projects, 'CDK projects')
         _get_metrics()
