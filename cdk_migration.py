@@ -1,4 +1,5 @@
 import os
+import re
 from github import Github, Repository, UnknownObjectException
 
 cdk_projects = []
@@ -79,7 +80,8 @@ def main():
     g = Github(token)
 
     for repo in g.get_user().get_repos():
-        if repo.name.startswith('radar'):
+        # later to be changed from 'radar' to 'sonarcloud'
+        if re.match(r'radar', repo.name, re.IGNORECASE):
             _analyze_repo(repo)
 
     if len(cdk_projects_without_dependencies_file) > 0:
