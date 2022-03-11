@@ -1,6 +1,6 @@
 import os
 import re
-from github import Github, Repository, UnknownObjectException, ContentFile
+from github import Github, Repository, UnknownObjectException
 
 cdk_projects = []
 cdk_projects_without_dependencies_file = []
