@@ -55,12 +55,12 @@ def _find_dependencies_file(repo: Repository.Repository, cdk_path: str):
 
 
 def _find_cdk_version(repo_name: str, cdk_path: str, file_content: str):
-    if "aws-cdk.core" in file_content:
+    if "aws-cdk." in file_content:
         _add_cdk_repo(cdk_projects, repo_name, cdk_path, "1")
     elif "aws-cdk-lib" in file_content:
         _add_cdk_repo(cdk_projects, repo_name, cdk_path, "2")
     else:
-        print("aws-cdk.* package not found in Pipfile.")
+        print("aws-cdk* package not found in Pipfile.")
 
 
 def _analyze_repo(repo: Repository.Repository):
